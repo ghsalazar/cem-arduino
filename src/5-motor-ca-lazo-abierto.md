@@ -17,7 +17,7 @@ $$J\frac{d\omega}{dt} = \tau_D - B\omega - \tau_L$$
 $$e_a = -K_m \omega \sin (p\theta)$$
 $$e_b = K_m \omega \cos (p\theta)$$
 
-$$\tau_D = K_m (−i_a sin p\theta + i_b cos p\theta)$$
+$$\tau_D = K_m (-i_a \sin p\theta + i_b \cos p\theta)$$
 
 ## Control de velocidad en lazo abierto
 

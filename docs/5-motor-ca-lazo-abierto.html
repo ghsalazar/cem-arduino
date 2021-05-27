@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Control de velocidad en lazo abierto para un motor de CA</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Control de velocidad en lazo abierto para un motor de CA</h1>
+</header>
+<h2 id="modelo">Modelo</h2>
+<figure>
+<img src="https://buildbotics.com/content/images/2019/09/4wireMotor.png" alt="Figura. Diagrama esquemático de un motor a pasos (Fuente: How to Wire Stepper Motors)." style="width:50.0%" /><figcaption><strong>Figura</strong>. Diagrama esquemático de un motor a pasos (<em>Fuente: <a href="https://buildbotics.com/wiring-stepper-motors/">How to Wire Stepper Motors</a></em>).</figcaption>
+</figure>
+<figure>
+<img src="https://es.mathworks.com/help/physmod/sps/powersys/ref/hystm_emf.gif" alt="Figura. Diagrama esquemático del devanado A (Fuente: Stepper Motor)" style="width:50.0%" /><figcaption><strong>Figura</strong>. Diagrama esquemático del devanado A (<em>Fuente: <a href="https://es.mathworks.com/help/physmod/sps/powersys/ref/steppermotor.html">Stepper Motor</a></em>)</figcaption>
+</figure>
+<p><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?v_a%20%3D%20L_a%20%5Cfrac%7Bdi_a%7D%7Bdt%7D%20%2B%20R_a%20i_a%20%2B%20e_a" alt="v_a = L_a \frac{di_a}{dt} + R_a i_a + e_a" title="v_a = L_a \frac{di_a}{dt} + R_a i_a + e_a" /><br /> <br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?v_b%20%3D%20L_b%20%5Cfrac%7Bdi_b%7D%7Bdt%7D%20%2B%20R_b%20i_b%20%2B%20e_b" alt="v_b = L_b \frac{di_b}{dt} + R_b i_b + e_b" title="v_b = L_b \frac{di_b}{dt} + R_b i_b + e_b" /><br /></p>
+<p><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?J%5Cfrac%7Bd%5Comega%7D%7Bdt%7D%20%3D%20%5Ctau_D%20-%20B%5Comega%20-%20%5Ctau_L" alt="J\frac{d\omega}{dt} = \tau_D - B\omega - \tau_L" title="J\frac{d\omega}{dt} = \tau_D - B\omega - \tau_L" /><br /></p>
+<h2 id="control-de-velocidad-en-lazo-abierto">Control de velocidad en lazo abierto</h2>
+<h2 id="implementación">Implementación</h2>
+<ul>
+<li><a href="https://buildbotics.com/wiring-stepper-motors/">How to Wire Stepper Motors</a></li>
+<li><a href="https://simple-circuit.com/arduino-bipolar-stepper-motor-control/">Arduino Bipolar Stepper Motor Control</a></li>
+<li><a href="https://www.ti.com/lit/ds/symlink/l293d.pdf">L293D Quadruple Half-H Drivers</a></li>
+<li><a href="https://www.sparkfun.com/datasheets/Robotics/L298_H_Bridge.pdf">L298N Dual Full-Bridge Driver</a></li>
+</ul>
+</body>
+</html>

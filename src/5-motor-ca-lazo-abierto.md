@@ -3,65 +3,165 @@ title: Control de velocidad en lazo abierto para un motor de CA
 ...
 ## Modelo
 
-![**Figura**. Diagrama esquemático de un motor a pasos (*Fuente: [How to Wire Stepper Motors](https://buildbotics.com/wiring-stepper-motors/)*).](https://buildbotics.com/content/images/2019/09/4wireMotor.png){width=50%}
+Para describir el comportamiento de un motor de corriente alterna, empezaremos por un caso simple que es el motor a pasos. 
 
-![**Figura**. Diagrama esquemático del devanado A (*Fuente: [Stepper Motor](https://es.mathworks.com/help/physmod/sps/powersys/ref/steppermotor.html)*)](https://es.mathworks.com/help/physmod/sps/powersys/ref/hystm_emf.gif){width=50%}
+![**Figura 1**. Diagrama esquemático de un motor a pasos bipolar (*Fuente: [How to Wire Stepper Motors](https://buildbotics.com/wiring-stepper-motors/)*).](https://buildbotics.com/content/images/2019/09/4wireMotor.png){width=25%}
+
+En la figura 1, podemos ver el diagrama esquemático de un motor a pasos bipolar. Para este caso simplificado vamos a asumir que solo tenemos un par de dientes en el rotor. Tenemos además dos devanados: A y B.
 
 ### Subsistema eléctrico
 
-$$v_a = L_a \frac{di_a}{dt} + R_a i_a + e_a$$
-$$v_b = L_b \frac{di_b}{dt} + R_b i_b + e_b$$
+A partir de la figura 1, analizaremos primeramente el comportamiento del devanado A.
 
-### Subsistema mecánico
+![**Figura 2**. (a) Diagrama esquemático del devanado A, y (b) fuerza contralectromotriz en el mismo devanado (*Fuente: [Stepper Motor](https://es.mathworks.com/help/physmod/sps/powersys/ref/steppermotor.html)*)](https://es.mathworks.com/help/physmod/sps/powersys/ref/hystm_emf.gif){width=50%}
 
-$$J\frac{d\omega}{dt} = \tau_D - B\omega - \tau_L$$
+Como podemos apreciar en la figura 2a, el devanado A se puede describir por
+medio de una resistencia ideal, una inductancia ideal y un alternador ideal. En
+la figura 2b, podemos ver que el alternador ideal produce una [fuerza
+contrelectromotriz](https://es.wikipedia.org/wiki/Fuerza_contraelectromotriz) de
+forma sinusoidal. 
+
+Si aplicamos la [segunda ley de Kirchhoff](https://es.wikipedia.org/wiki/Leyes_de_Kirchhoff#Ley_de_tensiones_de_Kirchhoff) al devanado, obtenemos la ecuación 
+
+$$v_a = L_a \frac{di_a}{dt} + R_a i_a + e_a$$ {#eq:va}
+
+donde $v_a$ es el voltaje de entrada en el devanado A del motor, $i_a$ es la
+corriente a traves del devanado y $e_a$ es la fuerza contraelectromotiz
+producida por el alternador ideal del devanado A. Por otro lado, la constante
+$L_a$ es la inductancia del devanado y la constante $R_a$ es la resistencia del
+devanado.
+
+Al repitir el mismo procedimiento en el devanado B, obtenemos la ecuación
+
+$$v_b = L_b \frac{di_b}{dt} + R_b i_b + e_b$$ {#eq:vb}
+
+donde $v_b$ es el voltaje de entrada en el devanado B del motor, $i_b$ es la
+corriente a traves del devanado y $e_e$ es la fuerza contraelectromotiz
+producida por el alternador ideal del devanado B. Por otro lado, la constante
+$L_b$ es la inductancia del devanado y la constante $R_b$ es la resistencia del
+devanado.
+
+### Susbsistema mecánico
+
+Por otro lado, para describir el comportamiento mecánico, aplicamos la [segunda
+ley de Euler para el
+movimiento](https://en.wikipedia.org/wiki/Euler%27s_laws_of_motion#Euler's_second_law)
+al rotor, con lo que obtenemos la expresión
+
+$$J\frac{d\omega}{dt} = \tau_D - B\omega - \tau_L$${#eq:rotor}
+
+donde $\omega$ es la velocidad angular del rotor, $\tau_D$ es el par motor
+desarrollado sobre el rotor y $\tau_L$ es el par de la carga. Además, la
+constante $J$ es el momento de inercia del rotor y $B$ es la fricción viscosa
+rotacional.
 
 ### Interacciones
 
-(*Fuente para las interacciones:
-https://core.ac.uk/download/pdf/148670797.pdf#page=39*)
+Por si mismas las ecuaciones (@eq:va), (@eq:vb) y (@eq:rotor) no nos permiten
+describir completamente el comportamiento del motor. Para ello, requerimos
+también de las interacciones que ocurren entre los subsistemas eléctrico y
+mecánico.
 
-$$e_a = -K_m \omega \sin (p\theta)$$
-$$e_b = K_m \omega \cos (p\theta)$$
-$$\tau_D = -K_m i_a \sin p\theta + K_m i_b \cos p\theta$$
+La [acción del subsistema mecánico al
+devanado A](https://core.ac.uk/download/pdf/148670797.pdf#page=39) está dada por
+la ecuación
+
+$$e_a = -K_m \omega \sin (P\theta)$${#eq:ea}
+
+donde $\theta$ es el ángulo que el rotor se desplaza, y su relación con la
+velocidad angular está dado por la ecuación
+
+$$\frac{d\theta}{dt}=\omega.$$
+
+La constante $K_m$ es la constante del motor, y la constante $P$ en el número de
+pares de dientes que tiene el rotor.
+
+En cuanto al caso del devanado B tenemos la ecuación
+
+$$e_b = K_m \omega \cos (P\theta)$${#eq:eb}
+
+Por otro lado, la [reacción del subsistema eléctrico en el
+rotor](https://core.ac.uk/download/pdf/148670797.pdf#page=41) está dada por la
+expresión
+
+$$\tau_D = -K_m i_a \sin P\theta + K_m i_b \cos P\theta.$${#eq:tau}
 
 ### Modelo dinámico
 
-$$L_a \frac{di_a}{dt} + R_a i_a = v_a + K_m \omega \sin (p\theta)$$
-$$L_b \frac{di_b}{dt} + R_b i_b = v_b - K_m \omega \cos (p\theta)$$
-$$J\frac{d\omega}{dt} + B\omega = - K_m i_a \sin p\theta + K_m i_b \cos p\theta - \tau_L$$
+A partir de las ecuaciones anteriores, podemos obtener un conjunto de ecuaciones
+diferenciales lineales no homogéneas. Por ejemplo, partiendo de (@eq:va) y
+(@eq:ea), podemos obtener la ecuación
+
+$$L_a \frac{di_a}{dt} + R_a i_a = v_a + K_m \omega \sin (P\theta).$${#eq:dia}
+
+Para el caso de (@eq:vb) y (@eq:eb), al reorganizarla tenemos
+
+$$L_b \frac{di_b}{dt} + R_b i_b = v_b - K_m \omega \cos (P\theta).$${#eq:dib}
+
+Y finalmente, con las ecuaciones (@eq:rotor) y (@eq:tau) obtenemos
+
+$$J\frac{d\omega}{dt} + B\omega = - K_m i_a \sin (P\theta) + K_m i_b \cos (P\theta) - \tau_L.$${#eq:dw}
 
 
 ## Control de velocidad en lazo abierto
-Usando la linealización tecnológica
 
-$$i_a = -I \sin p\theta$$
-$$i_b = I \cos p\theta$$
+Para implementar un control de velocidad en lazo abierto para un motor de CA,
+construiremos un par de entradas, $v_a$ y $v_b$, que permitan tener una
+velocidad constante en la salida. Para ello, propondremos como paso intermedio
+las corrientes 
 
-$$J\frac{d\omega}{dt} + B\omega =  K_m I \sin^2 p\theta + K_m I \cos^2 p\theta - \tau_L$$
+$$i_a = -I_p \sin P\theta$${#eq:ia}
+$$i_b = I_p \cos P\theta$${#eq:ib}
 
-$$J\frac{d\omega}{dt} + B\omega =  K_m I - \tau_L$$
+donde $I_p$ es una corriente constante.
 
-Entonces
+Se sustituye en (@eq:dw) las ecuaciones (@eq:ia) y (@eq:ib), con lo que
+obtenemos la expresión
 
-$$v_a = -L_a I \cos p\theta - R_a I \sin p\theta - K_m \omega \sin (p\theta)$$
+$$J\frac{d\omega}{dt} + B\omega =  K_m I \sin^2 P\theta + K_m I \cos^2 P\theta -
+\tau_L$$
 
-por otro lado
+la cual puede ser reducida a
 
-(*https://en.wikipedia.org/wiki/List_of_trigonometric_identities#Sine_and_cosine*)
+$$J\frac{d\omega}{dt} + B\omega =  K_m I - \tau_L.$${#eq:dwlineal}
 
-$$a \cos\gamma + b\sin\gamma = c \cos(\gamma+\phi)$$
+Si asumimos que $\tau_L$ es constante, entonces la velocidad del rotor en estado
+estacionario será constante. Por lo tanto, las corrientes definidas en (@eq:ia)
+y (@eq:ib) funcionan para regular la velocidad del rotor.
 
-$$c = sgn(a)\sqrt{a^2+b^2}$$
-$$\phi = \arctan\left(-\frac{b}{a}\right)$$
+Ahora debemos obtener los voltajes de entrada para obtener (@eq:ia) y (@eq:ib).
+Para ello, aplicamos inicialmente (@eq:ia) y (@eq:ea) a (@eq:va), con lo que
+obtenemos
 
-Entonces
+$$v_a = -L_a I P\omega \cos P\theta - (R_a I + K_m \omega) \sin (P\theta).$${#eq:input}
 
-$$v_a = -L_a i \cos p\theta - (R_a i + K_m \omega) \sin (p\theta)$$
+Para simplificar dicah expresión, usaremos la [identidad trigonométrica para la
+combinación lineal de seno y
+coseno](https://en.wikipedia.org/wiki/List_of_trigonometric_identities#Sine_and_cosine),
+y obtenemos
 
-$$v_a = V_p \cos(p\theta + phi)$$
+$$v_a = -V_p \cos(P\theta + \phi)$$
 
-* [Controlador Variable de Frecuencia - VFD para motores AC | Pr#98](https://youtu.be/I3MjAyZ-Tn0)
+donde
+
+$$V_p = \sqrt{(L_a I P\omega )^2 + (R_a I + K_m \omega)^2}$$
+
+$$\phi = \arctan\left(\frac{R_a I + K_m \omega}{L_a I P\omega}\right)$$
+
+Una vez obtenida $v_a$, falta hacer el mismo trabajo para $v_b$. Queda como
+ejercicio para el lector realizar el mismo trabajo. Sin embargo el resultado
+será similar. En pocas palabras, aplicando las señales
+
+$$v_a = -V_p \cos(P\omega t + \phi)$$
+$$v_b = V_p \sin(P\omega t + \phi)$$
+
+con una frecuencia constante, la velocidad del rotor se debe regular a la misma
+frecuencia.
+
+Para la implementación de un controlador similar para el caso monofásico, se
+puede ver el siguiente video.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/I3MjAyZ-Tn0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Implementación
 

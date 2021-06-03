@@ -1,5 +1,8 @@
 /// @file   two-phase-inverter.ino
 /// @author Gastón Hugo Salazar Silva <ghsalazar@ipn.mx>
+/// @date   2021-06-03
+/// @brief  Implementación del controlador para un inversor simple sobre la
+///         tarjeta Arduino UNO
 
 const int ENABLE_1 = 1 << 6;
 const int ENABLE_2 = 1 << 7;

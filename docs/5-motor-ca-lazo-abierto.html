@@ -161,7 +161,10 @@ code span.wa { color: #ffff00; font-weight: bold; } /* Warning */
 <p>El código desarrollado se muesta en el siguiente listado.</p>
 <script src="http://gist-it.appspot.com/https://github.com/ghsalazar/cem-arduino/raw/main/examples/two-phase-inverter.ino"></script>
 <div class="sourceCode" id="cb1" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" title="1"><span class="co">/// </span><span class="an">@file</span><span class="co">   </span><span class="cv">two-phase-inverter.ino</span></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="co">/// </span><span class="an">@author</span><span class="co"> Gastón Hugo Salazar Silva </span><span class="kw">&lt;ghsalazar@ipn.mx&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co">/// </span><span class="an">@author</span><span class="co"> Gastón Hugo Salazar Silva </span><span class="kw">&lt;ghsalazar@ipn.mx&gt;</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="co">/// </span><span class="an">@date</span><span class="co">   2021-06-03</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="co">/// </span><span class="an">@brief</span><span class="co">  Implementación del controlador para un inversor simple sobre la</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="co">///         tarjeta Arduino UNO</span></a></code></pre></div>
 <div class="sourceCode" id="cb2" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb2-1" title="1"><span class="at">const</span> <span class="dt">int</span> ENABLE_1 = <span class="dv">1</span> &lt;&lt; <span class="dv">6</span>;</a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="at">const</span> <span class="dt">int</span> ENABLE_2 = <span class="dv">1</span> &lt;&lt; <span class="dv">7</span>;</a>
 <a class="sourceLine" id="cb2-3" title="3"><span class="at">const</span> <span class="dt">int</span> OUTPUTS  = <span class="bn">0b1111</span> &lt;&lt; <span class="dv">2</span>;</a></code></pre></div>

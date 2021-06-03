@@ -198,6 +198,9 @@ El código desarrollado se muesta en el siguiente listado.
 <<two-phase-inverter.ino>>=
 /// @file   two-phase-inverter.ino
 /// @author Gastón Hugo Salazar Silva <ghsalazar@ipn.mx>
+/// @date   2021-06-03
+/// @brief  Implementación del controlador para un inversor simple sobre la
+///         tarjeta Arduino UNO
 
 @
 

@@ -165,6 +165,8 @@ puede ver el siguiente video.
 
 ## Implementación
 
+<script src="http://gist-it.appspot.com/https://raw.githubusercontent.com/ghsalazar/cem-arduino/main/examples/two-phase-inverter.ino"></script>
+
 https://www.tinkercad.com/things/f8KcIgQaXO9-fantastic-luulia-albar/editel?sharecode=zhruNH-anu7aVYLOEv2M0_MduvVZuNjC5G45cn84JnY
 
 <<two-phase-inverter.ino>>=

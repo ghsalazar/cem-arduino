@@ -171,8 +171,15 @@ https://www.tinkercad.com/things/f8KcIgQaXO9-fantastic-luulia-albar/editel?share
 const int ENABLE_1 = 1 << 6;
 const int ENABLE_2 = 1 << 7;
 const int OUTPUTS  = 0b1111 << 2;
+
+@
+
+<<two-phase-inverter.ino>>=
 const int STATES   = 0b11;
 
+@
+
+<<two-phase-inverter.ino>>=
 const int output[] { 
   0b1001 << 2,
   0b1010 << 2,
@@ -180,18 +187,35 @@ const int output[] {
   0b0101 << 2
 };
 
-int state;
+@
 
+<<two-phase-inverter.ino>>=
 void setup()
 {
   DDRD = ENABLE_2 | ENABLE_1 | OUTPUTS; //Setting pins for output
-  state = 0;
 }
 
+@
+
+<<two-phase-inverter.ino>>=
 void loop()
 {
+@
+
+<<two-phase-inverter.ino>>=
+  static int state = 0;
+
+@
+
+<<two-phase-inverter.ino>>=
   state = (++state) & STATES;
+@
+
+<<two-phase-inverter.ino>>=
   PORTD = ENABLE_2 | ENABLE_1 | output[state];
+@
+
+<<two-phase-inverter.ino>>=
   delay(1000); // Wait for 1000 millisecond(s)
 }
 @

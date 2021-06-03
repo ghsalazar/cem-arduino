@@ -4,95 +4,15 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Control de velocidad en lazo abierto para un motor de CA</title>
+  <title>Untitled</title>
   <style type="text/css">
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
       span.underline{text-decoration: underline;}
       div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
-  
-  <!-- pandoc-eqnos: equation style -->
-  <style>
-    .eqnos { display: inline-block; position: relative; width: 100%; }
-    .eqnos br { display: none; }
-    .eqnos-number { position: absolute; right: 0em; top: 50%; line-height: 0; }
-  </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">Control de velocidad en lazo abierto para un motor de CA</h1>
-</header>
-<h2 id="modelo">Modelo</h2>
-<p>Para describir el comportamiento de un motor de corriente alterna, empezaremos por un caso simple que es el motor a pasos.</p>
-<figure>
-<img src="https://buildbotics.com/content/images/2019/09/4wireMotor.png" alt="Figura 1. Diagrama esquemático de un motor a pasos bipolar (Fuente: How to Wire Stepper Motors)." style="width:25.0%" /><figcaption><strong>Figura 1</strong>. Diagrama esquemático de un motor a pasos bipolar (<em>Fuente: <a href="https://buildbotics.com/wiring-stepper-motors/">How to Wire Stepper Motors</a></em>).</figcaption>
-</figure>
-<p>En la figura 1, podemos ver el diagrama esquemático de un motor a pasos bipolar. Para este caso simplificado vamos a asumir que solo tenemos un par de dientes en el rotor. Tenemos además dos devanados: A y B.</p>
-<h3 id="subsistema-eléctrico">Subsistema eléctrico</h3>
-<p>A partir de la figura 1, analizaremos primeramente el comportamiento del devanado A.</p>
-<figure>
-<img src="https://es.mathworks.com/help/physmod/sps/powersys/ref/hystm_emf.gif" alt="Figura 2. (a) Diagrama esquemático del devanado A, y (b) fuerza contralectromotriz en el mismo devanado (Fuente: Stepper Motor)" style="width:50.0%" /><figcaption><strong>Figura 2</strong>. (a) Diagrama esquemático del devanado A, y (b) fuerza contralectromotriz en el mismo devanado (<em>Fuente: <a href="https://es.mathworks.com/help/physmod/sps/powersys/ref/steppermotor.html">Stepper Motor</a></em>)</figcaption>
-</figure>
-<p>Como podemos apreciar en la figura 2a, el devanado A se puede describir por medio de una resistencia ideal, una inductancia ideal y un alternador ideal. En la figura 2b, podemos ver que el alternador ideal produce una <a href="https://es.wikipedia.org/wiki/Fuerza_contraelectromotriz">fuerza contrelectromotriz</a> de forma sinusoidal.</p>
-<p>Si aplicamos la <a href="https://es.wikipedia.org/wiki/Leyes_de_Kirchhoff#Ley_de_tensiones_de_Kirchhoff">segunda ley de Kirchhoff</a> al devanado, obtenemos la ecuación</p>
-<p><span id="eq:va" class="eqnos"><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?v_a%20%3D%20L_a%20%5Cfrac%7Bdi_a%7D%7Bdt%7D%20%2B%20R_a%20i_a%20%2B%20e_a" alt="v_a = L_a \frac{di_a}{dt} + R_a i_a + e_a" title="v_a = L_a \frac{di_a}{dt} + R_a i_a + e_a" /><br /><span class="eqnos-number">(1)</span></span> </p>
-<p>donde <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?v_a" alt="v_a" title="v_a" /> es el voltaje de entrada en el devanado A del motor, <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?i_a" alt="i_a" title="i_a" /> es la corriente a traves del devanado y <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?e_a" alt="e_a" title="e_a" /> es la fuerza contraelectromotiz producida por el alternador ideal del devanado A. Por otro lado, la constante <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?L_a" alt="L_a" title="L_a" /> es la inductancia del devanado y la constante <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?R_a" alt="R_a" title="R_a" /> es la resistencia del devanado.</p>
-<p>Al repitir el mismo procedimiento en el devanado B, obtenemos la ecuación</p>
-<p><span id="eq:vb" class="eqnos"><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?v_b%20%3D%20L_b%20%5Cfrac%7Bdi_b%7D%7Bdt%7D%20%2B%20R_b%20i_b%20%2B%20e_b" alt="v_b = L_b \frac{di_b}{dt} + R_b i_b + e_b" title="v_b = L_b \frac{di_b}{dt} + R_b i_b + e_b" /><br /><span class="eqnos-number">(2)</span></span> </p>
-<p>donde <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?v_b" alt="v_b" title="v_b" /> es el voltaje de entrada en el devanado B del motor, <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?i_b" alt="i_b" title="i_b" /> es la corriente a traves del devanado y <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?e_e" alt="e_e" title="e_e" /> es la fuerza contraelectromotiz producida por el alternador ideal del devanado B. Por otro lado, la constante <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?L_b" alt="L_b" title="L_b" /> es la inductancia del devanado y la constante <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?R_b" alt="R_b" title="R_b" /> es la resistencia del devanado.</p>
-<h3 id="susbsistema-mecánico">Susbsistema mecánico</h3>
-<p>Por otro lado, para describir el comportamiento mecánico, aplicamos la <a href="https://en.wikipedia.org/wiki/Euler%27s_laws_of_motion#Euler&#39;s_second_law">segunda ley de Euler para el movimiento</a> al rotor, con lo que obtenemos la expresión</p>
-<p><span id="eq:rotor" class="eqnos"><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?J%5Cfrac%7Bd%5Comega%7D%7Bdt%7D%20%3D%20%5Ctau_D%20-%20B%5Comega%20-%20%5Ctau_L" alt="J\frac{d\omega}{dt} = \tau_D - B\omega - \tau_L" title="J\frac{d\omega}{dt} = \tau_D - B\omega - \tau_L" /><br /><span class="eqnos-number">(3)</span></span></p>
-<p>donde <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?%5Comega" alt="\omega" title="\omega" /> es la velocidad angular del rotor, <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?%5Ctau_D" alt="\tau_D" title="\tau_D" /> es el par motor desarrollado sobre el rotor y <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?%5Ctau_L" alt="\tau_L" title="\tau_L" /> es el par de la carga. Además, la constante <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?J" alt="J" title="J" /> es el momento de inercia del rotor y <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?B" alt="B" title="B" /> es la fricción viscosa rotacional.</p>
-<h3 id="interacciones">Interacciones</h3>
-<p>Por si mismas las ecuaciones (<a href="#eq:va">1</a>), (<a href="#eq:vb">2</a>) y (<a href="#eq:rotor">3</a>) no nos permiten describir completamente el comportamiento del motor. Para ello, requerimos también de las interacciones que ocurren entre los subsistemas eléctrico y mecánico.</p>
-<p>La <a href="https://core.ac.uk/download/pdf/148670797.pdf#page=39">acción del subsistema mecánico al devanado A</a> está dada por la ecuación</p>
-<p><span id="eq:ea" class="eqnos"><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?e_a%20%3D%20-K_m%20%5Comega%20%5Csin%20%28P%5Ctheta%29" alt="e_a = -K_m \omega \sin (P\theta)" title="e_a = -K_m \omega \sin (P\theta)" /><br /><span class="eqnos-number">(4)</span></span></p>
-<p>donde <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?%5Ctheta" alt="\theta" title="\theta" /> es el ángulo que el rotor se desplaza, y su relación con la velocidad angular está dado por la ecuación</p>
-<p><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bd%5Ctheta%7D%7Bdt%7D%3D%5Comega." alt="\frac{d\theta}{dt}=\omega." title="\frac{d\theta}{dt}=\omega." /><br /></p>
-<p>La constante <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?K_m" alt="K_m" title="K_m" /> es la constante del motor, y la constante <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?P" alt="P" title="P" /> en el número de pares de dientes que tiene el rotor.</p>
-<p>En cuanto al caso del devanado B tenemos la ecuación</p>
-<p><span id="eq:eb" class="eqnos"><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?e_b%20%3D%20K_m%20%5Comega%20%5Ccos%20%28P%5Ctheta%29" alt="e_b = K_m \omega \cos (P\theta)" title="e_b = K_m \omega \cos (P\theta)" /><br /><span class="eqnos-number">(5)</span></span></p>
-<p>Por otro lado, la <a href="https://core.ac.uk/download/pdf/148670797.pdf#page=41">reacción del subsistema eléctrico en el rotor</a> está dada por la expresión</p>
-<p><span id="eq:tau" class="eqnos"><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?%5Ctau_D%20%3D%20-K_m%20i_a%20%5Csin%20P%5Ctheta%20%2B%20K_m%20i_b%20%5Ccos%20P%5Ctheta." alt="\tau_D = -K_m i_a \sin P\theta + K_m i_b \cos P\theta." title="\tau_D = -K_m i_a \sin P\theta + K_m i_b \cos P\theta." /><br /><span class="eqnos-number">(6)</span></span></p>
-<h3 id="modelo-dinámico">Modelo dinámico</h3>
-<p>A partir de las ecuaciones anteriores, podemos obtener un conjunto de ecuaciones diferenciales lineales no homogéneas. Por ejemplo, partiendo de (<a href="#eq:va">1</a>) y (<a href="#eq:ea">4</a>), podemos obtener la ecuación</p>
-<p><span id="eq:dia" class="eqnos"><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?L_a%20%5Cfrac%7Bdi_a%7D%7Bdt%7D%20%2B%20R_a%20i_a%20%3D%20v_a%20%2B%20K_m%20%5Comega%20%5Csin%20%28P%5Ctheta%29." alt="L_a \frac{di_a}{dt} + R_a i_a = v_a + K_m \omega \sin (P\theta)." title="L_a \frac{di_a}{dt} + R_a i_a = v_a + K_m \omega \sin (P\theta)." /><br /><span class="eqnos-number">(7)</span></span></p>
-<p>Para el caso de (<a href="#eq:vb">2</a>) y (<a href="#eq:eb">5</a>), al reorganizarla tenemos</p>
-<p><span id="eq:dib" class="eqnos"><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?L_b%20%5Cfrac%7Bdi_b%7D%7Bdt%7D%20%2B%20R_b%20i_b%20%3D%20v_b%20-%20K_m%20%5Comega%20%5Ccos%20%28P%5Ctheta%29." alt="L_b \frac{di_b}{dt} + R_b i_b = v_b - K_m \omega \cos (P\theta)." title="L_b \frac{di_b}{dt} + R_b i_b = v_b - K_m \omega \cos (P\theta)." /><br /><span class="eqnos-number">(8)</span></span></p>
-<p>Y finalmente, con las ecuaciones (<a href="#eq:rotor">3</a>) y (<a href="#eq:tau">6</a>) obtenemos</p>
-<p><span id="eq:dw" class="eqnos"><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?J%5Cfrac%7Bd%5Comega%7D%7Bdt%7D%20%2B%20B%5Comega%20%3D%20-%20K_m%20i_a%20%5Csin%20%28P%5Ctheta%29%20%2B%20K_m%20i_b%20%5Ccos%20%28P%5Ctheta%29%20-%20%5Ctau_L." alt="J\frac{d\omega}{dt} + B\omega = - K_m i_a \sin (P\theta) + K_m i_b \cos (P\theta) - \tau_L." title="J\frac{d\omega}{dt} + B\omega = - K_m i_a \sin (P\theta) + K_m i_b \cos (P\theta) - \tau_L." /><br /><span class="eqnos-number">(9)</span></span></p>
-<h2 id="control-de-velocidad-en-lazo-abierto">Control de velocidad en lazo abierto</h2>
-<p>Para implementar un control de velocidad en lazo abierto para un motor de CA, construiremos un par de entradas, <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?v_a" alt="v_a" title="v_a" /> y <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?v_b" alt="v_b" title="v_b" />, que permitan tener una velocidad constante en la salida. Para ello, propondremos como paso intermedio las corrientes</p>
-<p><span id="eq:ia" class="eqnos"><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?i_a%20%3D%20-I_p%20%5Csin%20P%5Ctheta" alt="i_a = -I_p \sin P\theta" title="i_a = -I_p \sin P\theta" /><br /><span class="eqnos-number">(10)</span></span> <span id="eq:ib" class="eqnos"><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?i_b%20%3D%20I_p%20%5Ccos%20P%5Ctheta" alt="i_b = I_p \cos P\theta" title="i_b = I_p \cos P\theta" /><br /><span class="eqnos-number">(11)</span></span></p>
-<p>donde <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?I_p" alt="I_p" title="I_p" /> es una corriente constante.</p>
-<p>Se sustituye en (<a href="#eq:dw">9</a>) las ecuaciones (<a href="#eq:ia">10</a>) y (<a href="#eq:ib">11</a>), con lo que obtenemos la expresión</p>
-<p><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?J%5Cfrac%7Bd%5Comega%7D%7Bdt%7D%20%2B%20B%5Comega%20%3D%20%20K_m%20I%20%5Csin%5E2%20P%5Ctheta%20%2B%20K_m%20I%20%5Ccos%5E2%20P%5Ctheta%20-%0A%5Ctau_L" alt="J\frac{d\omega}{dt} + B\omega =  K_m I \sin^2 P\theta + K_m I \cos^2 P\theta -
-\tau_L" title="J\frac{d\omega}{dt} + B\omega =  K_m I \sin^2 P\theta + K_m I \cos^2 P\theta -
-\tau_L" /><br /></p>
-<p>la cual puede ser reducida a</p>
-<p><span id="eq:dwlineal" class="eqnos"><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?J%5Cfrac%7Bd%5Comega%7D%7Bdt%7D%20%2B%20B%5Comega%20%3D%20%20K_m%20I%20-%20%5Ctau_L." alt="J\frac{d\omega}{dt} + B\omega =  K_m I - \tau_L." title="J\frac{d\omega}{dt} + B\omega =  K_m I - \tau_L." /><br /><span class="eqnos-number">(12)</span></span></p>
-<p>Si asumimos que <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?%5Ctau_L" alt="\tau_L" title="\tau_L" /> es constante, entonces la velocidad del rotor en estado estacionario será constante. Por lo tanto, las corrientes definidas en (<a href="#eq:ia">10</a>) y (<a href="#eq:ib">11</a>) funcionan para regular la velocidad del rotor.</p>
-<p>Ahora debemos obtener los voltajes de entrada para obtener (<a href="#eq:ia">10</a>) y (<a href="#eq:ib">11</a>). Para ello, aplicamos inicialmente (<a href="#eq:ia">10</a>) y (<a href="#eq:ea">4</a>) a (<a href="#eq:va">1</a>), con lo que obtenemos</p>
-<p><span id="eq:input" class="eqnos"><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?v_a%20%3D%20-L_a%20I%20P%5Comega%20%5Ccos%20P%5Ctheta%20-%20%28R_a%20I%20%2B%20K_m%20%5Comega%29%20%5Csin%20%28P%5Ctheta%29." alt="v_a = -L_a I P\omega \cos P\theta - (R_a I + K_m \omega) \sin (P\theta)." title="v_a = -L_a I P\omega \cos P\theta - (R_a I + K_m \omega) \sin (P\theta)." /><br /><span class="eqnos-number">(13)</span></span></p>
-<p>Para simplificar dicah expresión, usaremos la <a href="https://en.wikipedia.org/wiki/List_of_trigonometric_identities#Sine_and_cosine">identidad trigonométrica para la combinación lineal de seno y coseno</a>, y obtenemos</p>
-<p><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?v_a%20%3D%20-V_p%20%5Ccos%28P%5Ctheta%20%2B%20%5Cphi%29" alt="v_a = -V_p \cos(P\theta + \phi)" title="v_a = -V_p \cos(P\theta + \phi)" /><br /></p>
-<p>donde</p>
-<p><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?V_p%20%3D%20%5Csqrt%7B%28L_a%20I%20P%5Comega%20%29%5E2%20%2B%20%28R_a%20I%20%2B%20K_m%20%5Comega%29%5E2%7D" alt="V_p = \sqrt{(L_a I P\omega )^2 + (R_a I + K_m \omega)^2}" title="V_p = \sqrt{(L_a I P\omega )^2 + (R_a I + K_m \omega)^2}" /><br /></p>
-<p><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?%5Cphi%20%3D%20%5Carctan%5Cleft%28%5Cfrac%7BR_a%20I%20%2B%20K_m%20%5Comega%7D%7BL_a%20I%20P%5Comega%7D%5Cright%29" alt="\phi = \arctan\left(\frac{R_a I + K_m \omega}{L_a I P\omega}\right)" title="\phi = \arctan\left(\frac{R_a I + K_m \omega}{L_a I P\omega}\right)" /><br /></p>
-<p>Una vez obtenida <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?v_a" alt="v_a" title="v_a" />, falta hacer el mismo trabajo para <img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?v_b" alt="v_b" title="v_b" />. Queda como ejercicio para el lector realizar el mismo trabajo. Sin embargo el resultado será similar. En pocas palabras, aplicando las señales</p>
-<p><br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?v_a%20%3D%20-V_p%20%5Ccos%28P%5Comega%20t%20%2B%20%5Cphi%29" alt="v_a = -V_p \cos(P\omega t + \phi)" title="v_a = -V_p \cos(P\omega t + \phi)" /><br /> <br /><img style="vertical-align:middle" src="https://latex.codecogs.com/png.latex?v_b%20%3D%20V_p%20%5Csin%28P%5Comega%20t%20%2B%20%5Cphi%29" alt="v_b = V_p \sin(P\omega t + \phi)" title="v_b = V_p \sin(P\omega t + \phi)" /><br /></p>
-<p>con una frecuencia constante, la velocidad del rotor se debe regular a la misma frecuencia.</p>
-<p>Para la implementación de un controlador similar para el caso monofásico, se puede ver el siguiente video.</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/I3MjAyZ-Tn0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-</iframe>
-<h2 id="implementación">Implementación</h2>
-<ul>
-<li><a href="https://buildbotics.com/wiring-stepper-motors/">How to Wire Stepper Motors</a></li>
-<li><a href="https://simple-circuit.com/arduino-bipolar-stepper-motor-control/">Arduino Bipolar Stepper Motor Control</a></li>
-<li><a href="https://www.ti.com/lit/ds/symlink/l293d.pdf">L293D Quadruple Half-H Drivers</a></li>
-<li><a href="https://www.sparkfun.com/datasheets/Robotics/L298_H_Bridge.pdf">L298N Dual Full-Bridge Driver</a></li>
-</ul>
+
 </body>
 </html>

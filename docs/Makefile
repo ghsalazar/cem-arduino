@@ -6,12 +6,7 @@ HTMLFLAGS = --filter pandoc-eqnos  -s --highlight-style espresso -f markdown --w
 all: $(TARGETS)
 
 %.html: $(SRC_DIR)/%.md
-	# ../etc/mdweb/src/mdweave $< > $@
-	cat $< | \
-	pandoc	$(HTMLFLAGS)	-o $@
-	
-#%.md: $(SRC_DIR)/%.md
-#	cp $< $@
+	sh ../etc/mdweb/src/mdweave $< |	pandoc	$(HTMLFLAGS)	-o $@
 
 .PHONNY: clean distclean
 

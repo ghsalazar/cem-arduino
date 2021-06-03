@@ -1,3 +1,6 @@
+/// @file   two-phase-inverter.ino
+/// @author Gastón Hugo Salazar Silva <ghsalazar@ipn.mx>
+
 const int ENABLE_1 = 1 << 6;
 const int ENABLE_2 = 1 << 7;
 const int OUTPUTS  = 0b1111 << 2;

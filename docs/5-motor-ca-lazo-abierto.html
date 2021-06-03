@@ -150,29 +150,40 @@ code span.wa { color: #ffff00; font-weight: bold; } /* Warning */
 <iframe width="560" height="315" src="https://www.youtube.com/embed/I3MjAyZ-Tn0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <h2 id="implementación">Implementación</h2>
-<script src="http://gist-it.appspot.com/https://raw.githubusercontent.com/ghsalazar/cem-arduino/main/examples/two-phase-inverter.ino"></script>
-<p>https://www.tinkercad.com/things/f8KcIgQaXO9-fantastic-luulia-albar/editel?sharecode=zhruNH-anu7aVYLOEv2M0_MduvVZuNjC5G45cn84JnY</p>
-<div class="sourceCode" id="cb1" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" title="1"><span class="at">const</span> <span class="dt">int</span> ENABLE_1 = <span class="dv">1</span> &lt;&lt; <span class="dv">6</span>;</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="at">const</span> <span class="dt">int</span> ENABLE_2 = <span class="dv">1</span> &lt;&lt; <span class="dv">7</span>;</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="at">const</span> <span class="dt">int</span> OUTPUTS  = <span class="bn">0b1111</span> &lt;&lt; <span class="dv">2</span>;</a></code></pre></div>
-<div class="sourceCode" id="cb2" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb2-1" title="1"><span class="at">const</span> <span class="dt">int</span> STATES   = <span class="bn">0b11</span>;</a></code></pre></div>
-<div class="sourceCode" id="cb3" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb3-1" title="1"><span class="at">const</span> <span class="dt">int</span> output[] { </a>
-<a class="sourceLine" id="cb3-2" title="2">  <span class="bn">0b1001</span> &lt;&lt; <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb3-3" title="3">  <span class="bn">0b1010</span> &lt;&lt; <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb3-4" title="4">  <span class="bn">0b0110</span> &lt;&lt; <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb3-5" title="5">  <span class="bn">0b0101</span> &lt;&lt; <span class="dv">2</span></a>
-<a class="sourceLine" id="cb3-6" title="6">};</a></code></pre></div>
-<div class="sourceCode" id="cb4" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb4-1" title="1"><span class="dt">void</span> setup()</a>
-<a class="sourceLine" id="cb4-2" title="2">{</a>
-<a class="sourceLine" id="cb4-3" title="3">  DDRD = ENABLE_2 | ENABLE_1 | OUTPUTS; <span class="co">//Setting pins for output</span></a>
-<a class="sourceLine" id="cb4-4" title="4">}</a></code></pre></div>
-<div class="sourceCode" id="cb5" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb5-1" title="1"><span class="dt">void</span> loop()</a>
-<a class="sourceLine" id="cb5-2" title="2">{</a></code></pre></div>
-<div class="sourceCode" id="cb6" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb6-1" title="1">  <span class="at">static</span> <span class="dt">int</span> state = <span class="dv">0</span>;</a></code></pre></div>
-<div class="sourceCode" id="cb7" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb7-1" title="1">  state = (++state) &amp; STATES;</a></code></pre></div>
-<div class="sourceCode" id="cb8" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb8-1" title="1">  PORTD = ENABLE_2 | ENABLE_1 | output[state];</a></code></pre></div>
-<div class="sourceCode" id="cb9" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb9-1" title="1">  delay(<span class="dv">1000</span>); <span class="co">// Wait for 1000 millisecond(s)</span></a>
-<a class="sourceLine" id="cb9-2" title="2">}</a></code></pre></div>
+<p>A continuación se presentará una implementación simple de un inversor bifásico para un motor a pasos. Utilizamos una tarjeta <a href="https://store.arduino.cc/usa/arduino-uno-rev3">Arduino UNO</a> para desarrollar la aplicación.</p>
+<figure>
+<img src="../assets/static/cem-two-phase-inverter.PNG" alt="Figura 3. Circuito de inversor bifásico para un motor a pasos." /><figcaption><strong>Figura 3</strong>. Circuito de inversor bifásico para un motor a pasos.</figcaption>
+</figure>
+<p>En la figura 3, podemos ver el circuito de inversor bifásico para un motor a pasos. Por limitaciones de la plataforma, tuvimos que sustituir cada devanado del motor a pasos con un inductor y una resistencia. Como ya mencionamos, utilizamos una tarjeta Arduino UNO. Para la etapa de potencia, nos valimos del circuito integrado <a href="https://www.ti.com/lit/ds/symlink/l293d.pdf">L293D</a>, que contiene 4 medios puentes H.</p>
+<p>Para ver el circuito y el código del modelo de la figura 3, pueden revisar el siguiente <a href="https://www.tinkercad.com/things/f8KcIgQaXO9-fantastic-luulia-albar/editel?sharecode=zhruNH-anu7aVYLOEv2M0_MduvVZuNjC5G45cn84JnY">enlace en TinkerCAD.</a></p>
+<h3 id="código-para-arduino-uno">Código para Arduino UNO</h3>
+<p>Si bien es posible desarrollar código para Arduino en el lenguaje C, tenemos que es más accesible usar la entorno <a href="http://wiring.org.co/">Wiring</a> empleado por la tarjeta. Sin embargo, Wiring se soporta por medio del lenguaje C++ y aprovecharemos algunas de las capacidades propias del mismo lenguaje.</p>
+<p>El código desarrollado se muesta en el siguiente listado.</p>
+<script src="http://gist-it.appspot.com/https://github.com/ghsalazar/cem-arduino/raw/main/examples/two-phase-inverter.ino"></script>
+<div class="sourceCode" id="cb1" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" title="1"><span class="co">/// </span><span class="an">@file</span><span class="co">   </span><span class="cv">two-phase-inverter.ino</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co">/// </span><span class="an">@author</span><span class="co"> Gastón Hugo Salazar Silva </span><span class="kw">&lt;ghsalazar@ipn.mx&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb2" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb2-1" title="1"><span class="at">const</span> <span class="dt">int</span> ENABLE_1 = <span class="dv">1</span> &lt;&lt; <span class="dv">6</span>;</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="at">const</span> <span class="dt">int</span> ENABLE_2 = <span class="dv">1</span> &lt;&lt; <span class="dv">7</span>;</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="at">const</span> <span class="dt">int</span> OUTPUTS  = <span class="bn">0b1111</span> &lt;&lt; <span class="dv">2</span>;</a></code></pre></div>
+<div class="sourceCode" id="cb3" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb3-1" title="1"><span class="at">const</span> <span class="dt">int</span> STATES   = <span class="bn">0b11</span>;</a></code></pre></div>
+<div class="sourceCode" id="cb4" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb4-1" title="1"><span class="at">const</span> <span class="dt">int</span> output[] { </a>
+<a class="sourceLine" id="cb4-2" title="2">  <span class="bn">0b1001</span> &lt;&lt; <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb4-3" title="3">  <span class="bn">0b1010</span> &lt;&lt; <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb4-4" title="4">  <span class="bn">0b0110</span> &lt;&lt; <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb4-5" title="5">  <span class="bn">0b0101</span> &lt;&lt; <span class="dv">2</span></a>
+<a class="sourceLine" id="cb4-6" title="6">};</a></code></pre></div>
+<div class="sourceCode" id="cb5" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb5-1" title="1"><span class="dt">void</span> setup()</a>
+<a class="sourceLine" id="cb5-2" title="2">{</a>
+<a class="sourceLine" id="cb5-3" title="3">  DDRD = ENABLE_2 | ENABLE_1 | OUTPUTS; <span class="co">//Setting pins for output</span></a>
+<a class="sourceLine" id="cb5-4" title="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb6" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb6-1" title="1"><span class="dt">void</span> loop()</a>
+<a class="sourceLine" id="cb6-2" title="2">{</a></code></pre></div>
+<div class="sourceCode" id="cb7" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb7-1" title="1">  <span class="at">static</span> <span class="dt">int</span> state = <span class="dv">0</span>;</a></code></pre></div>
+<div class="sourceCode" id="cb8" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb8-1" title="1">  state = (++state) &amp; STATES;</a></code></pre></div>
+<div class="sourceCode" id="cb9" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb9-1" title="1">  PORTD = ENABLE_2 | ENABLE_1 | output[state];</a></code></pre></div>
+<div class="sourceCode" id="cb10" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb10-1" title="1">  delay(<span class="dv">1000</span>); <span class="co">// Wait for 1000 millisecond(s)</span></a>
+<a class="sourceLine" id="cb10-2" title="2">}</a></code></pre></div>
+<h2 id="para-saber-más">Para saber más</h2>
 <ul>
 <li><a href="https://buildbotics.com/wiring-stepper-motors/">How to Wire Stepper Motors</a></li>
 <li><a href="https://simple-circuit.com/arduino-bipolar-stepper-motor-control/">Arduino Bipolar Stepper Motor Control</a></li>

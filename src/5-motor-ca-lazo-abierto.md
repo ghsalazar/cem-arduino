@@ -165,9 +165,42 @@ puede ver el siguiente video.
 
 ## Implementación
 
-<script src="http://gist-it.appspot.com/https://raw.githubusercontent.com/ghsalazar/cem-arduino/main/examples/two-phase-inverter.ino"></script>
+A continuación se presentará una implementación simple de un
+inversor bifásico para un motor a pasos. Utilizamos una
+tarjeta [Arduino UNO](https://store.arduino.cc/usa/arduino-uno-rev3) para
+desarrollar la aplicación.
 
-https://www.tinkercad.com/things/f8KcIgQaXO9-fantastic-luulia-albar/editel?sharecode=zhruNH-anu7aVYLOEv2M0_MduvVZuNjC5G45cn84JnY
+![**Figura 3**. Circuito de inversor bifásico para un motor a pasos.](../assets/static/cem-two-phase-inverter.PNG)
+
+En la figura 3, podemos ver el circuito de inversor bifásico para un motor a
+pasos. Por limitaciones de la plataforma, tuvimos que sustituir cada devanado
+del motor a pasos con un inductor y una resistencia. Como ya mencionamos,
+utilizamos una tarjeta Arduino UNO. Para la etapa de potencia, nos valimos del
+circuito integrado [L293D](https://www.ti.com/lit/ds/symlink/l293d.pdf), que
+contiene 4 medios puentes H.
+
+Para ver el circuito y el código del modelo de la figura 3, pueden revisar el
+siguiente [enlace en
+TinkerCAD.](https://www.tinkercad.com/things/f8KcIgQaXO9-fantastic-luulia-albar/editel?sharecode=zhruNH-anu7aVYLOEv2M0_MduvVZuNjC5G45cn84JnY)
+
+### Código para Arduino UNO
+
+Si bien es posible desarrollar código para Arduino en el lenguaje C, tenemos que
+es más accesible usar la entorno [Wiring](http://wiring.org.co/) empleado por la
+tarjeta. Sin embargo, Wiring se soporta por medio del lenguaje C++ y
+aprovecharemos algunas de las capacidades propias del mismo lenguaje.
+
+El código desarrollado se muesta en el siguiente listado.
+
+<script src="http://gist-it.appspot.com/https://github.com/ghsalazar/cem-arduino/raw/main/examples/two-phase-inverter.ino"></script>
+
+
+<<two-phase-inverter.ino>>=
+/// @file   two-phase-inverter.ino
+/// @author Gastón Hugo Salazar Silva <ghsalazar@ipn.mx>
+
+@
+
 
 <<two-phase-inverter.ino>>=
 const int ENABLE_1 = 1 << 6;
@@ -221,6 +254,9 @@ void loop()
   delay(1000); // Wait for 1000 millisecond(s)
 }
 @
+
+
+## Para saber más
 
 * [How to Wire Stepper Motors](https://buildbotics.com/wiring-stepper-motors/)
 * [Arduino Bipolar Stepper Motor Control](https://simple-circuit.com/arduino-bipolar-stepper-motor-control/)

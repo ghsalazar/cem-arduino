@@ -1,3 +1,5 @@
 digraph states {
     s0 -> s1 -> s2 -> s3 -> s0;
+    {rank = same; s0; s1}
+    {rank = same; s2; s3}
 }

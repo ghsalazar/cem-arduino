@@ -306,6 +306,8 @@ transición del estado se acuerdo al siguiente conjunto
 
 $$\{s_0 \to s_1\}$$
 
+![**Figura**](https://github.com/ghsalazar/cem-arduino/raw/main/assets/figures/two-phase-inverter-states.png)
+
 <<two-phase-inverter.ino>>=
   state = (++state) & STATES;
 @

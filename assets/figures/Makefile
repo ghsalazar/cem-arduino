@@ -5,3 +5,7 @@ all: $(TARGETS)
 
 %.png: $(SRCDIR)/%.dot
 	dot	$<	-Tpng	-o $@
+	
+.PHONNY: clean
+	rm -f $(TARGETS)
+	

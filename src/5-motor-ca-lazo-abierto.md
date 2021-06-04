@@ -194,6 +194,9 @@ El código desarrollado se muesta en el siguiente listado.
 
 <script src="http://gist-it.appspot.com/https://github.com/ghsalazar/cem-arduino/raw/main/examples/two-phase-inverter.ino"></script>
 
+A continuación, explicaremos con detalle el código. Pimeramente, tenemos el
+encabezado, que simplemente es un comentario para identificar el código y su
+autoría, así como explicar brevemente de que se trata.
 
 <<two-phase-inverter.ino>>=
 /// @file   two-phase-inverter.ino
@@ -204,18 +207,48 @@ El código desarrollado se muesta en el siguiente listado.
 
 @
 
+Como empleamos el circuito integrado
+[L293D](https://www.ti.com/lit/ds/symlink/l293d.pdf) para la etapa de potencia,
+tenemos que debemos usar el pin 1 del integrado para habilitar dos medios
+puentes H por medio de la salida digital D6 de Arduino. Cómo D6 se encuentra en
+el bit con la septima posición en el puerto D del microcontrolador
+[ATmega328p](https://ww1.microchip.com/downloads/en/DeviceDoc/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061B.pdf),
+utilizamos la constante `ENABLE_1` para especificar eso.
 
 <<two-phase-inverter.ino>>=
 const int ENABLE_1 = 1 << 6;
+@
+
+Utilizamos una constante en lugar un simbolo definido (`#define`), porque nos
+permite identificar errores por medio de los mecanismos propios del compilador y
+el depurador.
+
+Luego, empleamos la constante `ENABLE_2` para habilitar los otros dos medios
+puentes H, por medio del pin 9 del L293D y la salida digital D7 del puerto D del
+ATmega328p, como se encuentra en la octava posición del puerto D.
+
+<<two-phase-inverter.ino>>=
 const int ENABLE_2 = 1 << 7;
+@
+
+Además, más adelante tendremos que registrar en la variable DDRD que salidas
+utilizaremos. Para ello usaremos la mascara `OUTPUTS`. Como usaremos los cuatro
+medios puentes H, necesitaremos cuatro salidas digitales de la tarjeta Arduino
+UNO. Seleccionamos las salida digitales que van de D2 a D5 para ellos. 
+
+<<two-phase-inverter.ino>>=
 const int OUTPUTS  = 0b1111 << 2;
 
 @
 
-<<two-phase-inverter.ino>>=
-const int STATES   = 0b11;
+No produciremos una señal sinusoidal como tal; sino aproximaremos la señal
+sinusoidal por medio de una onda cuadrada. Como necesitamos dos fases para el
+motor a pasos, usaremos dos ondas cuadradas con 90° eléctricos de separación.
 
-@
+Además, cada inversor requiere de un puente H completo, por lo que necesita dos
+señales para activarlo. El arreglo `output` contiene valores constantes que al
+ser referenciados en secuencia produce las señales necesarias para producir las
+formas de onda requeridas por los devanados del motor a pasos. 
 
 <<two-phase-inverter.ino>>=
 const int output[] { 
@@ -227,6 +260,19 @@ const int output[] {
 
 @
 
+La constante `STATES` es una máscara que utilizaremos para acotar el número de
+estados que puede generar el programa.
+
+<<two-phase-inverter.ino>>=
+const int STATES   = 0b11;
+
+@
+
+Como estamos trabajando con el entorno de Wiring, debemos tener dos funciones
+definidas: `setup` y `loop`. En la función `setup`, sólo registraremos en la
+variable `DDRD` que elementos del puerto D son salidas. En este caso, estan
+definidos por las constantes `ENABLE_1`, `ENABLE_2` y `OUTPUTS`.
+
 <<two-phase-inverter.ino>>=
 void setup()
 {
@@ -235,15 +281,30 @@ void setup()
 
 @
 
+La siguiente función que se debe definir es `loop`.
+
 <<two-phase-inverter.ino>>=
 void loop()
 {
 @
 
+La variable `state` es la que lleva el ritmo de trabajo del inversos. Es una
+[variable
+estática](https://es.wikipedia.org/wiki/Variable_est%C3%A1tica#%C3%81mbito) de
+la función `loop`; esto quiere decir que es como una variable global pero solo
+puede ser accedida desde el ambito de la propia función. Se inicializa con un
+valor cero.
+
 <<two-phase-inverter.ino>>=
   static int state = 0;
 
 @
+
+Como dijimos antes, la variable estatica `state` es la que lleva el ritmo del
+inversor. El conjunto de los estados posibles es $\{s_0,s_1,s_2,s_3\}$. La
+transición del estado se acuerdo al siguiente conjunto
+
+$$\{s_0 \to s_1\}$$
 
 <<two-phase-inverter.ino>>=
   state = (++state) & STATES;
@@ -254,7 +315,7 @@ void loop()
 @
 
 <<two-phase-inverter.ino>>=
-  delay(1000); // Wait for 1000 millisecond(s)
+  delay(1000); // Waiting time in milliseconds
 }
 @
 

@@ -2,10 +2,17 @@
 title: Implementación con Arduino de un control de velocidad en lazo abierto para un motor a pasos
 ...
 
-A continuación, presentaremos una implementación simple de un
-inversor bifásico para un motor a pasos. Utilizamos una
-tarjeta [Arduino UNO](https://store.arduino.cc/usa/arduino-uno-rev3) para
-desarrollar la aplicación.
+Los motores de corriente alterna son los motores que más se usan en la
+industria. Usualmente se utilizan para mantener una velocidad constante. Para
+ello, utilizamos [controladores de frecuencia variable](https://es.wikipedia.org/wiki/Variador_de_frecuencia#:~:text=Un%20variador%20de%20frecuencia%20(siglas,de%20alimentaci%C3%B3n%20suministrada%20al%20motor.)
+(VFD, por sus siglas en inglés), también llamados variadores de frecuencia.
+Estos controladores operan en lazo abierto.
+
+A continuación, presentaremos una implementación simple de un inversor bifásico
+para un motor a pasos. Utilizamos una tarjeta [Arduino
+UNO](https://store.arduino.cc/usa/arduino-uno-rev3) para desarrollar la
+aplicación. Hay que recordar que un motor a pasos es un motor de corriente
+alterna síncrono bifásico.
 
 ## Circuito
 
@@ -174,7 +181,14 @@ frecuencia es 0.25 Hz.
 
 ## Conclusiones
 
+Mostamos una implementación simple de un inversor bifásico
+para un motor a pasos con una tarjeta Arduino
+UNO.
 
+Hay que recordar que un motor a pasos es un motor de corriente alterna síncrono
+bifásico, y este ejemplo nos sirve para entender el funcionamiento básico de un
+VFD. Los VFD se utilizan en la industria para controlar la velocidad de los
+motores en la industria.
 ## Para saber más
 
 * [How to Wire Stepper Motors](https://buildbotics.com/wiring-stepper-motors/)

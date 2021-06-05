@@ -78,7 +78,8 @@ code span.wa { color: #ffff00; font-weight: bold; } /* Warning */
 <header id="title-block-header">
 <h1 class="title">Implementación con Arduino de un control de velocidad en lazo abierto para un motor a pasos</h1>
 </header>
-<p>A continuación, presentaremos una implementación simple de un inversor bifásico para un motor a pasos. Utilizamos una tarjeta <a href="https://store.arduino.cc/usa/arduino-uno-rev3">Arduino UNO</a> para desarrollar la aplicación.</p>
+<p>Los motores de corriente alterna son los motores que más se usan en la industria. Usualmente se utilizan para mantener una velocidad constante. Para ello, utilizamos [controladores de frecuencia variable](https://es.wikipedia.org/wiki/Variador_de_frecuencia#:~:text=Un%20variador%20de%20frecuencia%20(siglas,de%20alimentaci%C3%B3n%20suministrada%20al%20motor.) (VFD, por sus siglas en inglés), también llamados variadores de frecuencia. Estos controladores operan en lazo abierto.</p>
+<p>A continuación, presentaremos una implementación simple de un inversor bifásico para un motor a pasos. Utilizamos una tarjeta <a href="https://store.arduino.cc/usa/arduino-uno-rev3">Arduino UNO</a> para desarrollar la aplicación. Hay que recordar que un motor a pasos es un motor de corriente alterna síncrono bifásico.</p>
 <h2 id="circuito">Circuito</h2>
 <figure>
 <img src="../assets/static/cem-two-phase-inverter.PNG" alt="Figura 1. Circuito de inversor bifásico para un motor a pasos." /><figcaption><strong>Figura 1</strong>. Circuito de inversor bifásico para un motor a pasos.</figcaption>
@@ -135,7 +136,8 @@ code span.wa { color: #ffff00; font-weight: bold; } /* Warning */
 <div class="sourceCode" id="cb12" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb12-1" title="1">  delay(<span class="dv">1000</span>);                                  <span class="co">// Waiting time in milliseconds</span></a>
 <a class="sourceLine" id="cb12-2" title="2">}</a></code></pre></div>
 <h2 id="conclusiones">Conclusiones</h2>
-<h2 id="para-saber-más">Para saber más</h2>
+<p>Mostamos una implementación simple de un inversor bifásico para un motor a pasos con una tarjeta Arduino UNO.</p>
+<p>Hay que recordar que un motor a pasos es un motor de corriente alterna síncrono bifásico, y este ejemplo nos sirve para entender el funcionamiento básico de un VFD. Los VFD se utilizan en la industria para controlar la velocidad de los motores en la industria. ## Para saber más</p>
 <ul>
 <li><a href="https://buildbotics.com/wiring-stepper-motors/">How to Wire Stepper Motors</a></li>
 <li><a href="https://simple-circuit.com/arduino-bipolar-stepper-motor-control/">Arduino Bipolar Stepper Motor Control</a></li>

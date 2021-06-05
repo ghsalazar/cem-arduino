@@ -16,9 +16,9 @@ A partir de la figura 1, analizaremos primeramente el comportamiento del devanad
 ![**Figura 2**. (a) Diagrama esquemático del devanado A, y (b) fuerza contralectromotriz en el mismo devanado (*Fuente: [Stepper Motor](https://es.mathworks.com/help/physmod/sps/powersys/ref/steppermotor.html)*)](https://es.mathworks.com/help/physmod/sps/powersys/ref/hystm_emf.gif){width=50%}
 
 Como podemos apreciar en la figura 2a, el devanado A se puede describir por
-medio de una resistencia ideal, una inductancia ideal y un alternador ideal. En
+medio de una resistencia, una inductancia y un alternador ideales. En
 la figura 2b, podemos ver que el alternador ideal produce una [fuerza
-contrelectromotriz](https://es.wikipedia.org/wiki/Fuerza_contraelectromotriz) de
+contraelectromotriz](https://es.wikipedia.org/wiki/Fuerza_contraelectromotriz) de
 forma sinusoidal. 
 
 Si aplicamos la [segunda ley de Kirchhoff](https://es.wikipedia.org/wiki/Leyes_de_Kirchhoff#Ley_de_tensiones_de_Kirchhoff) al devanado, obtenemos la ecuación 
@@ -31,7 +31,7 @@ producida por el alternador ideal del devanado A. Por otro lado, la constante
 $L_a$ es la inductancia del devanado y la constante $R_a$ es la resistencia del
 devanado.
 
-Al repitir el mismo procedimiento en el devanado B, obtenemos la ecuación
+Al repetir el mismo procedimiento en el devanado B, obtenemos la ecuación
 
 $$v_b = L_b \frac{di_b}{dt} + R_b i_b + e_b$$ {#eq:vb}
 
@@ -41,7 +41,7 @@ producida por el alternador ideal del devanado B. Por otro lado, la constante
 $L_b$ es la inductancia del devanado y la constante $R_b$ es la resistencia del
 devanado.
 
-### Susbsistema mecánico
+### Subsistema mecánico
 
 Por otro lado, para describir el comportamiento mecánico, aplicamos la [segunda
 ley de Euler para el
@@ -57,7 +57,7 @@ rotacional.
 
 ### Interacciones
 
-Por si mismas las ecuaciones (@eq:va), (@eq:vb) y (@eq:rotor) no nos permiten
+Por sí mismas las ecuaciones (@eq:va), (@eq:vb) y (@eq:rotor) no nos permiten
 describir completamente el comportamiento del motor. Para ello, requerimos
 también de las interacciones que ocurren entre los subsistemas eléctrico y
 mecánico.
@@ -135,7 +135,7 @@ obtenemos
 
 $$v_a = -L_a I P\omega \cos P\theta - (R_a I + K_m \omega) \sin (P\theta).$${#eq:input}
 
-Para simplificar dicah expresión, usaremos la [identidad trigonométrica para la
+Para simplificar dicha expresión, usaremos la [identidad trigonométrica para la
 combinación lineal de seno y
 coseno](https://en.wikipedia.org/wiki/List_of_trigonometric_identities#Sine_and_cosine),
 y obtenemos
@@ -149,7 +149,7 @@ $$V_p = \sqrt{(L_a I P\omega )^2 + (R_a I + K_m \omega)^2}$$
 $$\phi = \arctan\left(\frac{R_a I + K_m \omega}{L_a I P\omega}\right)$$
 
 Una vez obtenida $v_a$, falta hacer el mismo trabajo para $v_b$. Queda como
-ejercicio para el lector realizar el mismo trabajo. Sin embargo el resultado
+ejercicio para el lector realizar el mismo trabajo. Sin embargo,  el resultado
 será similar. En pocas palabras, aplicando las señales
 
 $$v_a = -V_p \cos(P\omega t + \phi)$$
@@ -165,7 +165,7 @@ puede ver el siguiente video.
 
 ## Implementación
 
-A continuación se presentará una implementación simple de un
+A continuación, presentaremos una implementación simple de un
 inversor bifásico para un motor a pasos. Utilizamos una
 tarjeta [Arduino UNO](https://store.arduino.cc/usa/arduino-uno-rev3) para
 desarrollar la aplicación.
@@ -190,11 +190,11 @@ es más accesible usar la entorno [Wiring](http://wiring.org.co/) empleado por l
 tarjeta. Sin embargo, Wiring se soporta por medio del lenguaje C++ y
 aprovecharemos algunas de las capacidades propias del mismo lenguaje.
 
-El código desarrollado se muesta en el siguiente listado.
+Presentamos el código desarrollado en el siguiente listado.
 
 <script src="http://gist-it.appspot.com/https://github.com/ghsalazar/cem-arduino/raw/main/examples/two-phase-inverter.ino"></script>
 
-A continuación, explicaremos con detalle el código. Pimeramente, tenemos el
+A continuación, explicaremos con detalle el código. Primeramente, tenemos el
 encabezado, que simplemente es un comentario para identificar el código y su
 autoría, así como explicar brevemente de que se trata.
 
@@ -202,8 +202,8 @@ autoría, así como explicar brevemente de que se trata.
 /// @file   two-phase-inverter.ino
 /// @author Gastón Hugo Salazar Silva <ghsalazar@ipn.mx>
 /// @date   2021-06-03
-/// @brief  Implementación del controlador para un inversor simple sobre la
-///         tarjeta Arduino UNO
+/// @brief  Implementación de un inversor simple 
+///         sobre la tarjeta Arduino UNO
 
 @
 
@@ -211,7 +211,7 @@ Como empleamos el circuito integrado
 [L293D](https://www.ti.com/lit/ds/symlink/l293d.pdf) para la etapa de potencia,
 tenemos que debemos usar el pin 1 del integrado para habilitar dos medios
 puentes H por medio de la salida digital D6 de Arduino. Cómo D6 se encuentra en
-el bit con la septima posición en el puerto D del microcontrolador
+el bit con la séptima posición en el puerto D del microcontrolador
 [ATmega328p](https://ww1.microchip.com/downloads/en/DeviceDoc/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061B.pdf),
 utilizamos la constante `ENABLE_1` para especificar eso.
 
@@ -219,7 +219,7 @@ utilizamos la constante `ENABLE_1` para especificar eso.
 const int ENABLE_1 = 1 << 6;
 @
 
-Utilizamos una constante en lugar un simbolo definido (`#define`), porque nos
+Utilizamos una constante en lugar un símbolo definido (`#define`), porque nos
 permite identificar errores por medio de los mecanismos propios del compilador y
 el depurador.
 
@@ -232,9 +232,9 @@ const int ENABLE_2 = 1 << 7;
 @
 
 Además, más adelante tendremos que registrar en la variable DDRD que salidas
-utilizaremos. Para ello usaremos la mascara `OUTPUTS`. Como usaremos los cuatro
+utilizaremos. Para ello usaremos la máscara `OUTPUTS`. Como usaremos los cuatro
 medios puentes H, necesitaremos cuatro salidas digitales de la tarjeta Arduino
-UNO. Seleccionamos las salida digitales que van de D2 a D5 para ellos. 
+UNO. Seleccionamos las salidas digitales que van de D2 a D5 para ellos. 
 
 <<two-phase-inverter.ino>>=
 const int OUTPUTS  = 0b1111 << 2;
@@ -270,7 +270,7 @@ const int STATES   = 0b11;
 
 Como estamos trabajando con el entorno de Wiring, debemos tener dos funciones
 definidas: `setup` y `loop`. En la función `setup`, sólo registraremos en la
-variable `DDRD` que elementos del puerto D son salidas. En este caso, estan
+variable `DDRD` que elementos del puerto D son salidas. En este caso, están
 definidos por las constantes `ENABLE_1`, `ENABLE_2` y `OUTPUTS`.
 
 <<two-phase-inverter.ino>>=
@@ -292,7 +292,7 @@ La variable `state` es la que lleva el ritmo de trabajo del inversos. Es una
 [variable
 estática](https://es.wikipedia.org/wiki/Variable_est%C3%A1tica#%C3%81mbito) de
 la función `loop`; esto quiere decir que es como una variable global pero solo
-puede ser accedida desde el ambito de la propia función. Se inicializa con un
+puede ser accedida desde el ámbito de la propia función. Se inicializa con un
 valor cero.
 
 <<two-phase-inverter.ino>>=
@@ -300,26 +300,37 @@ valor cero.
 
 @
 
-Como dijimos antes, la variable estatica `state` es la que lleva el ritmo del
-inversor. El conjunto de los estados posibles es $\{s_0,s_1,s_2,s_3\}$. La
-transición del estado se acuerdo al siguiente conjunto
+Como dijimos antes, la variable estática `state` es la que lleva el ritmo del
+inversor. El conjunto de los estados posibles y sus transiciones se puede ver en
+la figura 4.
 
-$$\{s_0 \to s_1\}$$
+![**Figura 4**. Grafo de estados del inversor.](https://github.com/ghsalazar/cem-arduino/raw/main/assets/figures/two-phase-inverter-states.png)
 
-![**Figura**](https://github.com/ghsalazar/cem-arduino/raw/main/assets/figures/two-phase-inverter-states.png)
+El siguiente estado se define incrementando en 1 el estado actual y
+enmascarándolo con la constante `STATES`.
 
 <<two-phase-inverter.ino>>=
   state = (++state) & STATES;
 @
 
+Los pines de salida se actualizan en una sola operación al asignarle a `PORTD`
+los bits que se deben encender y apagar. El arreglo output determina a partir
+del estado que medio puente se enciende o apaga. 
+
 <<two-phase-inverter.ino>>=
   PORTD = ENABLE_2 | ENABLE_1 | output[state];
 @
+
+Finalmente, la frecuencia de las señales cuadradas se determina a partir de la
+pausa que se da. En este caso son 1 000 ms para cada estado, por lo que la
+frecuencia es 0.25 Hz.
 
 <<two-phase-inverter.ino>>=
   delay(1000); // Waiting time in milliseconds
 }
 @
+
+## Conclusiones
 
 
 ## Para saber más

@@ -78,7 +78,7 @@ code span.wa { color: #ffff00; font-weight: bold; } /* Warning */
 <header id="title-block-header">
 <h1 class="title">Implementación con Arduino de un control de velocidad en lazo abierto para un motor a pasos</h1>
 </header>
-<p>Los motores de corriente alterna son los motores que más se usan en la industria. Usualmente se utilizan para mantener una velocidad constante. Para ello, utilizamos [controladores de frecuencia variable](https://es.wikipedia.org/wiki/Variador_de_frecuencia#:~:text=Un%20variador%20de%20frecuencia%20(siglas,de%20alimentaci%C3%B3n%20suministrada%20al%20motor.) (VFD, por sus siglas en inglés), también llamados variadores de frecuencia. Estos controladores operan en lazo abierto.</p>
+<p>Los motores de corriente alterna (CA) son los motores que más se usan en la industria. Usualmente se utilizan para mantener una velocidad constante. Para ello, utilizamos <a href="https://es.wikipedia.org/wiki/Variador_de_frecuencia">controladores de frecuencia variable</a> (VFD, por sus siglas en inglés), también llamados variadores de frecuencia. Estos controladores operan en lazo abierto.</p>
 <p>A continuación, presentaremos una implementación simple de un inversor bifásico para un motor a pasos. Utilizamos una tarjeta <a href="https://store.arduino.cc/usa/arduino-uno-rev3">Arduino UNO</a> para desarrollar la aplicación. Hay que recordar que un motor a pasos es un motor de corriente alterna síncrono bifásico.</p>
 <h2 id="circuito">Circuito</h2>
 <figure>
@@ -125,7 +125,7 @@ code span.wa { color: #ffff00; font-weight: bold; } /* Warning */
 <figure>
 <img src="https://github.com/ghsalazar/cem-arduino/raw/main/assets/figures/two-phase-inverter-states.png" alt="Figura 2. Grafo de estados del inversor." /><figcaption><strong>Figura 2</strong>. Grafo de estados del inversor.</figcaption>
 </figure>
-<p>Establecemos en que estado está el autómata por medio de la variable <code>state</code>. Es una <a href="https://es.wikipedia.org/wiki/Variable_est%C3%A1tica#%C3%81mbito">variable estática</a> de la función <code>loop</code>; esto quiere decir que es como una variable global pero solo puede ser accedida desde el ámbito de la propia función. Se inicializa con un valor cero.</p>
+<p>Establecemos en qué estado está el autómata por medio de la variable <code>state</code>. Es una <a href="https://es.wikipedia.org/wiki/Variable_est%C3%A1tica#%C3%81mbito">variable estática</a> de la función <code>loop</code>; esto quiere decir que es como una variable global pero solo puede ser accedida desde el ámbito de la propia función. Se inicializa con un valor cero.</p>
 <div class="sourceCode" id="cb9" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb9-1" title="1">  <span class="at">static</span> <span class="dt">int</span> state = <span class="dv">0</span>;</a></code></pre></div>
 <p>Es importante que recalquemos que la variable <code>state</code> es la que lleva el ritmo de trabajo del inversor.</p>
 <p>El siguiente estado se define incrementando en 1 el estado actual y enmascarándolo con la constante <code>STATES</code>.</p>
@@ -136,7 +136,7 @@ code span.wa { color: #ffff00; font-weight: bold; } /* Warning */
 <div class="sourceCode" id="cb12" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb12-1" title="1">  delay(<span class="dv">1000</span>);                                  <span class="co">// Waiting time in milliseconds</span></a>
 <a class="sourceLine" id="cb12-2" title="2">}</a></code></pre></div>
 <h2 id="conclusiones">Conclusiones</h2>
-<p>Mostamos una implementación simple de un inversor bifásico para un motor a pasos con una tarjeta Arduino UNO.</p>
+<p>Mostramos una implementación simple de un inversor bifásico para un motor a pasos con una tarjeta Arduino UNO.</p>
 <p>Hay que recordar que un motor a pasos es un motor de corriente alterna síncrono bifásico, y este ejemplo nos sirve para entender el funcionamiento básico de un VFD. Los VFD se utilizan en la industria para controlar la velocidad de los motores en la industria. ## Para saber más</p>
 <ul>
 <li><a href="https://buildbotics.com/wiring-stepper-motors/">How to Wire Stepper Motors</a></li>

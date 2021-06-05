@@ -2,11 +2,12 @@
 title: Implementación con Arduino de un control de velocidad en lazo abierto para un motor a pasos
 ...
 
-Los motores de corriente alterna son los motores que más se usan en la
+Los motores de corriente alterna (CA) son los motores que más se usan en la
 industria. Usualmente se utilizan para mantener una velocidad constante. Para
-ello, utilizamos [controladores de frecuencia variable](https://es.wikipedia.org/wiki/Variador_de_frecuencia#:~:text=Un%20variador%20de%20frecuencia%20(siglas,de%20alimentaci%C3%B3n%20suministrada%20al%20motor.)
-(VFD, por sus siglas en inglés), también llamados variadores de frecuencia.
-Estos controladores operan en lazo abierto.
+ello, utilizamos [controladores de frecuencia
+variable](https://es.wikipedia.org/wiki/Variador_de_frecuencia) (VFD, por sus
+siglas en inglés), también llamados variadores de frecuencia. Estos
+controladores operan en lazo abierto.
 
 A continuación, presentaremos una implementación simple de un inversor bifásico
 para un motor a pasos. Utilizamos una tarjeta [Arduino
@@ -140,7 +141,7 @@ podemos ver el grafo con el conjunto de los estados posibles y sus transiciones.
 
 ![**Figura 2**. Grafo de estados del inversor.](https://github.com/ghsalazar/cem-arduino/raw/main/assets/figures/two-phase-inverter-states.png)
 
-Establecemos en que estado está el autómata por medio de la variable `state`. Es
+Establecemos en qué estado está el autómata por medio de la variable `state`. Es
 una [variable
 estática](https://es.wikipedia.org/wiki/Variable_est%C3%A1tica#%C3%81mbito) de
 la función `loop`; esto quiere decir que es como una variable global pero solo
@@ -181,7 +182,7 @@ frecuencia es 0.25 Hz.
 
 ## Conclusiones
 
-Mostamos una implementación simple de un inversor bifásico
+Mostramos una implementación simple de un inversor bifásico
 para un motor a pasos con una tarjeta Arduino
 UNO.
 

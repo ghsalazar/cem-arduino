@@ -18,7 +18,7 @@ alterna síncrono bifásico.
 
 ## Circuito
 
-![**Figura 1**. Circuito de inversor bifásico para un motor a pasos.](../assets/static/cem-two-phase-inverter.PNG)
+![**Figura 1**. Circuito de inversor bifásico para un motor a pasos.](https://github.com/ghsalazar/cem-arduino/raw/main/assets/static/cem-two-phase-inverter.PNG)
 
 En la figura 1, podemos ver el circuito de inversor bifásico para un motor a
 pasos. Por limitaciones de la plataforma, tuvimos que sustituir cada devanado

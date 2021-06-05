@@ -1,7 +1,7 @@
 SRC_DIR = ../src
 TARGETS = $(notdir $(patsubst %.md, %.html, $(wildcard $(SRC_DIR)/*.md)))
-HTMLFLAGS = --filter pandoc-eqnos  -s --highlight-style espresso -f markdown --webtex
-DOCXFLAGS = --filter pandoc-eqnos  -s --highlight-style espresso -f markdown
+HTMLFLAGS = --filter pandoc-eqnos --highlight-style espresso -f markdown --webtex
+DOCXFLAGS = --filter pandoc-eqnos --highlight-style espresso -f markdown
 
 
 all: $(TARGETS)

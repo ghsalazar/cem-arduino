@@ -191,6 +191,7 @@ Hay que recordar que un motor a pasos es un motor de corriente alterna síncrono
 bifásico, y este ejemplo nos sirve para entender el funcionamiento básico de un
 VFD. Los VFD se utilizan en la industria para controlar la velocidad de los
 motores en la industria.
+
 ## Para saber más
 
 * [How to Wire Stepper Motors](https://buildbotics.com/wiring-stepper-motors/)

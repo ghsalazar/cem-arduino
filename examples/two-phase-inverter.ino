@@ -19,14 +19,14 @@ const int STATES   = 0b11;
 
 void setup()
 {
-  DDRD = ENABLE_2 | ENABLE_1 | OUTPUTS; //Setting pins for output
+  DDRD = ENABLE_2 | ENABLE_1 | OUTPUTS;         //Setting pins for output
 }
 
 void loop()
 {
   static int state = 0;
 
-  state = (++state) & STATES;
-  PORTD = ENABLE_2 | ENABLE_1 | output[state];
-  delay(1000); // Waiting time in milliseconds
+  state = (++state) & STATES;                   // State update
+  PORTD = ENABLE_2 | ENABLE_1 | output[state];  // Output setting
+  delay(1000);                                  // Waiting time in milliseconds
 }

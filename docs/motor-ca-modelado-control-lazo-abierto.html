@@ -4,74 +4,13 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Control de velocidad en lazo abierto para un motor de CA</title>
+  <meta name="author" content="Gastón Hugo Salazar Silva" />
+  <title>Modelado y control de velocidad en lazo abierto para un motor de CA</title>
   <style type="text/css">
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
       span.underline{text-decoration: underline;}
       div.column{display: inline-block; vertical-align: top; width: 50%;}
-  </style>
-  <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    background-color: #2a211c;
-    color: #bdae9d;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #bdae9d;  padding-left: 4px; }
-div.sourceCode
-  { color: #bdae9d; background-color: #2a211c; }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ffff00; } /* Alert */
-code span.an { color: #0066ff; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { } /* Attribute */
-code span.bn { color: #44aa43; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #43a8ed; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #049b0a; } /* Char */
-code span.cn { } /* Constant */
-code span.co { color: #0066ff; font-weight: bold; font-style: italic; } /* Comment */
-code span.do { color: #0066ff; font-style: italic; } /* Documentation */
-code span.dt { text-decoration: underline; } /* DataType */
-code span.dv { color: #44aa43; } /* DecVal */
-code span.er { color: #ffff00; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #44aa43; } /* Float */
-code span.fu { color: #ff9358; font-weight: bold; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #43a8ed; font-weight: bold; } /* Keyword */
-code span.op { } /* Operator */
-code span.pp { font-weight: bold; } /* Preprocessor */
-code span.sc { color: #049b0a; } /* SpecialChar */
-code span.ss { color: #049b0a; } /* SpecialString */
-code span.st { color: #049b0a; } /* String */
-code span.va { } /* Variable */
-code span.vs { color: #049b0a; } /* VerbatimString */
-code span.wa { color: #ffff00; font-weight: bold; } /* Warning */
   </style>
   
   <!-- pandoc-eqnos: equation style -->
@@ -83,7 +22,8 @@ code span.wa { color: #ffff00; font-weight: bold; } /* Warning */
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Control de velocidad en lazo abierto para un motor de CA</h1>
+<h1 class="title">Modelado y control de velocidad en lazo abierto para un motor de CA</h1>
+<p class="author">Gastón Hugo Salazar Silva</p>
 </header>
 <h2 id="modelo">Modelo</h2>
 <p>Para describir el comportamiento de un motor de corriente alterna, empezaremos por un caso simple que es el motor a pasos.</p>
@@ -149,62 +89,6 @@ code span.wa { color: #ffff00; font-weight: bold; } /* Warning */
 <p>Para la implementación de un controlador similar para el caso monofásico, se puede ver el siguiente video.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/I3MjAyZ-Tn0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
-<h2 id="implementación">Implementación</h2>
-<p>A continuación, presentaremos una implementación simple de un inversor bifásico para un motor a pasos. Utilizamos una tarjeta <a href="https://store.arduino.cc/usa/arduino-uno-rev3">Arduino UNO</a> para desarrollar la aplicación.</p>
-<figure>
-<img src="../assets/static/cem-two-phase-inverter.PNG" alt="Figura 3. Circuito de inversor bifásico para un motor a pasos." /><figcaption><strong>Figura 3</strong>. Circuito de inversor bifásico para un motor a pasos.</figcaption>
-</figure>
-<p>En la figura 3, podemos ver el circuito de inversor bifásico para un motor a pasos. Por limitaciones de la plataforma, tuvimos que sustituir cada devanado del motor a pasos con un inductor y una resistencia. Como ya mencionamos, utilizamos una tarjeta Arduino UNO. Para la etapa de potencia, nos valimos del circuito integrado <a href="https://www.ti.com/lit/ds/symlink/l293d.pdf">L293D</a>, que contiene 4 medios puentes H.</p>
-<p>Para ver el circuito y el código del modelo de la figura 3, pueden revisar el siguiente <a href="https://www.tinkercad.com/things/f8KcIgQaXO9-fantastic-luulia-albar/editel?sharecode=zhruNH-anu7aVYLOEv2M0_MduvVZuNjC5G45cn84JnY">enlace en TinkerCAD.</a></p>
-<h3 id="código-para-arduino-uno">Código para Arduino UNO</h3>
-<p>Si bien es posible desarrollar código para Arduino en el lenguaje C, tenemos que es más accesible usar la entorno <a href="http://wiring.org.co/">Wiring</a> empleado por la tarjeta. Sin embargo, Wiring se soporta por medio del lenguaje C++ y aprovecharemos algunas de las capacidades propias del mismo lenguaje.</p>
-<p>Presentamos el código desarrollado en el siguiente listado.</p>
-<script src="http://gist-it.appspot.com/https://github.com/ghsalazar/cem-arduino/raw/main/examples/two-phase-inverter.ino"></script>
-<p>A continuación, explicaremos con detalle el código. Primeramente, tenemos el encabezado, que simplemente es un comentario para identificar el código y su autoría, así como explicar brevemente de que se trata.</p>
-<div class="sourceCode" id="cb1" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" title="1"><span class="co">/// </span><span class="an">@file</span><span class="co">   </span><span class="cv">two-phase-inverter.ino</span></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="co">/// </span><span class="an">@author</span><span class="co"> Gastón Hugo Salazar Silva </span><span class="kw">&lt;ghsalazar@ipn.mx&gt;</span></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="co">/// </span><span class="an">@date</span><span class="co">   2021-06-03</span></a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="co">/// </span><span class="an">@brief</span><span class="co">  Implementación de un inversor simple </span></a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="co">///         sobre la tarjeta Arduino UNO</span></a></code></pre></div>
-<p>Como empleamos el circuito integrado <a href="https://www.ti.com/lit/ds/symlink/l293d.pdf">L293D</a> para la etapa de potencia, tenemos que debemos usar el pin 1 del integrado para habilitar dos medios puentes H por medio de la salida digital D6 de Arduino. Cómo D6 se encuentra en el bit con la séptima posición en el puerto D del microcontrolador <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061B.pdf">ATmega328p</a>, utilizamos la constante <code>ENABLE_1</code> para especificar eso.</p>
-<div class="sourceCode" id="cb2" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb2-1" title="1"><span class="at">const</span> <span class="dt">int</span> ENABLE_1 = <span class="dv">1</span> &lt;&lt; <span class="dv">6</span>;</a></code></pre></div>
-<p>Utilizamos una constante en lugar un símbolo definido (<code>#define</code>), porque nos permite identificar errores por medio de los mecanismos propios del compilador y el depurador.</p>
-<p>Luego, empleamos la constante <code>ENABLE_2</code> para habilitar los otros dos medios puentes H, por medio del pin 9 del L293D y la salida digital D7 del puerto D del ATmega328p, como se encuentra en la octava posición del puerto D.</p>
-<div class="sourceCode" id="cb3" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb3-1" title="1"><span class="at">const</span> <span class="dt">int</span> ENABLE_2 = <span class="dv">1</span> &lt;&lt; <span class="dv">7</span>;</a></code></pre></div>
-<p>Además, más adelante tendremos que registrar en la variable DDRD que salidas utilizaremos. Para ello usaremos la máscara <code>OUTPUTS</code>. Como usaremos los cuatro medios puentes H, necesitaremos cuatro salidas digitales de la tarjeta Arduino UNO. Seleccionamos las salidas digitales que van de D2 a D5 para ellos.</p>
-<div class="sourceCode" id="cb4" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb4-1" title="1"><span class="at">const</span> <span class="dt">int</span> OUTPUTS  = <span class="bn">0b1111</span> &lt;&lt; <span class="dv">2</span>;</a></code></pre></div>
-<p>No produciremos una señal sinusoidal como tal; sino aproximaremos la señal sinusoidal por medio de una onda cuadrada. Como necesitamos dos fases para el motor a pasos, usaremos dos ondas cuadradas con 90° eléctricos de separación.</p>
-<p>Además, cada inversor requiere de un puente H completo, por lo que necesita dos señales para activarlo. El arreglo <code>output</code> contiene valores constantes que al ser referenciados en secuencia produce las señales necesarias para producir las formas de onda requeridas por los devanados del motor a pasos.</p>
-<div class="sourceCode" id="cb5" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb5-1" title="1"><span class="at">const</span> <span class="dt">int</span> output[] { </a>
-<a class="sourceLine" id="cb5-2" title="2">  <span class="bn">0b1001</span> &lt;&lt; <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb5-3" title="3">  <span class="bn">0b1010</span> &lt;&lt; <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb5-4" title="4">  <span class="bn">0b0110</span> &lt;&lt; <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb5-5" title="5">  <span class="bn">0b0101</span> &lt;&lt; <span class="dv">2</span></a>
-<a class="sourceLine" id="cb5-6" title="6">};</a></code></pre></div>
-<p>La constante <code>STATES</code> es una máscara que utilizaremos para acotar el número de estados que puede generar el programa.</p>
-<div class="sourceCode" id="cb6" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb6-1" title="1"><span class="at">const</span> <span class="dt">int</span> STATES   = <span class="bn">0b11</span>;</a></code></pre></div>
-<p>Como estamos trabajando con el entorno de Wiring, debemos tener dos funciones definidas: <code>setup</code> y <code>loop</code>. En la función <code>setup</code>, sólo registraremos en la variable <code>DDRD</code> que elementos del puerto D son salidas. En este caso, están definidos por las constantes <code>ENABLE_1</code>, <code>ENABLE_2</code> y <code>OUTPUTS</code>.</p>
-<div class="sourceCode" id="cb7" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb7-1" title="1"><span class="dt">void</span> setup()</a>
-<a class="sourceLine" id="cb7-2" title="2">{</a>
-<a class="sourceLine" id="cb7-3" title="3">  DDRD = ENABLE_2 | ENABLE_1 | OUTPUTS; <span class="co">//Setting pins for output</span></a>
-<a class="sourceLine" id="cb7-4" title="4">}</a></code></pre></div>
-<p>La siguiente función que se debe definir es <code>loop</code>.</p>
-<div class="sourceCode" id="cb8" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb8-1" title="1"><span class="dt">void</span> loop()</a>
-<a class="sourceLine" id="cb8-2" title="2">{</a></code></pre></div>
-<p>La variable <code>state</code> es la que lleva el ritmo de trabajo del inversos. Es una <a href="https://es.wikipedia.org/wiki/Variable_est%C3%A1tica#%C3%81mbito">variable estática</a> de la función <code>loop</code>; esto quiere decir que es como una variable global pero solo puede ser accedida desde el ámbito de la propia función. Se inicializa con un valor cero.</p>
-<div class="sourceCode" id="cb9" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb9-1" title="1">  <span class="at">static</span> <span class="dt">int</span> state = <span class="dv">0</span>;</a></code></pre></div>
-<p>Como dijimos antes, la variable estática <code>state</code> es la que lleva el ritmo del inversor. El conjunto de los estados posibles y sus transiciones se puede ver en la figura 4.</p>
-<figure>
-<img src="https://github.com/ghsalazar/cem-arduino/raw/main/assets/figures/two-phase-inverter-states.png" alt="Figura 4. Grafo de estados del inversor." /><figcaption><strong>Figura 4</strong>. Grafo de estados del inversor.</figcaption>
-</figure>
-<p>El siguiente estado se define incrementando en 1 el estado actual y enmascarándolo con la constante <code>STATES</code>.</p>
-<div class="sourceCode" id="cb10" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb10-1" title="1">  state = (++state) &amp; STATES;</a></code></pre></div>
-<p>Los pines de salida se actualizan en una sola operación al asignarle a <code>PORTD</code> los bits que se deben encender y apagar. El arreglo output determina a partir del estado que medio puente se enciende o apaga.</p>
-<div class="sourceCode" id="cb11" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb11-1" title="1">  PORTD = ENABLE_2 | ENABLE_1 | output[state];</a></code></pre></div>
-<p>Finalmente, la frecuencia de las señales cuadradas se determina a partir de la pausa que se da. En este caso son 1 000 ms para cada estado, por lo que la frecuencia es 0.25 Hz.</p>
-<div class="sourceCode" id="cb12" name="two-phase-inverter.ino" data-caption="two-phase-inverter.ino" data-numbers="left" data-frame="leftline"><pre class="sourceCode ino"><code class="sourceCode cpp"><a class="sourceLine" id="cb12-1" title="1">  delay(<span class="dv">1000</span>); <span class="co">// Waiting time in milliseconds</span></a>
-<a class="sourceLine" id="cb12-2" title="2">}</a></code></pre></div>
-<h2 id="conclusiones">Conclusiones</h2>
 <h2 id="para-saber-más">Para saber más</h2>
 <ul>
 <li><a href="https://buildbotics.com/wiring-stepper-motors/">How to Wire Stepper Motors</a></li>

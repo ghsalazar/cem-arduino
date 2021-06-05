@@ -1,5 +1,6 @@
 ---
-title: Implementación con Arduino de un control de velocidad en lazo abierto para un motor a pasos
+title:  Implementación de un inversor bifásico con Arduino
+author: Gastón Hugo Salazar Silva
 ...
 
 Los motores de corriente alterna (CA) son los motores que más se usan en la
@@ -30,7 +31,7 @@ Para ver el circuito y el código del modelo de la figura 3, pueden revisar el
 siguiente [enlace en
 TinkerCAD.](https://www.tinkercad.com/things/f8KcIgQaXO9-fantastic-luulia-albar/editel?sharecode=zhruNH-anu7aVYLOEv2M0_MduvVZuNjC5G45cn84JnY)
 
-### Código para Arduino UNO
+## Código para Arduino UNO
 
 Si bien es posible desarrollar código para Arduino en el lenguaje C, tenemos que
 es más accesible usar la entorno [Wiring](http://wiring.org.co/) empleado por la
